@@ -13,7 +13,7 @@
 */
 
 // Check to ensure this file is within the rest of the framework
-defined('EPATH_BASE') or die();
+defined('_EXEC') or die();
 
 /**
  * MySQL database driver
@@ -22,7 +22,7 @@ defined('EPATH_BASE') or die();
  * @subpackage	Database
  * @since		1.0
  */
-class eDatabaseODBC extends eDatabase
+if (!class_exists('bDatabaseODBC')){ class bDatabaseODBC extends bDatabase
 {
 	/**
 	 * The database driver name
@@ -51,7 +51,7 @@ class eDatabaseODBC extends eDatabase
 	* @access	public
 	* @param	array	List of options used to configure the connection
 	* @since	1.5
-	* @see		eDatabase
+	* @see		bDatabase
 	*/
 	function __construct( $options )
 	{
@@ -262,7 +262,7 @@ class eDatabaseODBC extends eDatabase
 			$this->_errorMsg = mysql_error( $this->_resource )." SQL=$sql";
 
 			if ($this->_debug) {
-				JError::raiseError(500, 'eDatabaseMySQL::query: '.$this->_errorNum.' - '.$this->_errorMsg );
+				trigger_error('bDatabaseMySQL::query: '.$this->_errorNum.' - '.$this->_errorMsg );
 			}
 			return false;
 		}
@@ -722,4 +722,4 @@ class eDatabaseODBC extends eDatabase
 
 		return $result;
 	}
-}
+}}

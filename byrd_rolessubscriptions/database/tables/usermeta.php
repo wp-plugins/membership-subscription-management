@@ -17,79 +17,35 @@ defined('_BYRDROLES') or die();
 * Table class
 *
 */
-if (!class_exists('TableUsers')){ class TableUsers extends bTable {
+if (!class_exists('TableUsermeta')){ class TableUsermeta extends bTable {
 
 	/**
 	 * Key
 	 *
 	 * @var tinyint(11)
 	 */
-	var $ID = null;
+	var $umeta_id = null;
 	
     /**
 	 * 
 	 *
 	 * @var tinyint(11)
 	 */
-	var $user_login = null;
+	var $user_id = null;
 	
     /**
 	 * 
 	 *
 	 * @var tinyint(11)
 	 */
-	var $user_pass = null;
+	var $meta_key = null;
 	
     /**
 	 * 
 	 *
 	 * @var tinyint(11)
 	 */
-	var $user_nicename = null;
-	
-    /**
-	 * 
-	 *
-	 * @var tinyint(11)
-	 */
-	var $user_email = null;
-	
-    /**
-	 * 
-	 *
-	 * @var tinyint(11)
-	 */
-	var $user_url = null;
-	
-    /**
-	 * 
-	 *
-	 * @var tinyint(11)
-	 */
-	var $user_registered = null;
-	
-    /**
-	 * 
-	 *
-	 * @var tinyint(11)
-	 */
-	var $user_activation_key = null;
-	
-    /**
-	 * 
-	 *
-	 * @var tinyint(11)
-	 */
-	var $user_status = null;
-	
-    /**
-	 * 
-	 *
-	 * @var tinyint(11)
-	 */
-	var $display_name = null;
-	
-    
+	var $meta_value = null;
 	
 	
     /**
@@ -99,7 +55,7 @@ if (!class_exists('TableUsers')){ class TableUsers extends bTable {
 	 * @since 1.0
 	 */
 	function __construct(& $db) {
-		parent::__construct('#__users', 'ID', $db);
+		parent::__construct('#__usermeta', 'umeta_id', $db);
 	}
 
 	/**

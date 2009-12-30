@@ -12,8 +12,9 @@
  * See COPYRIGHT.php for copyright notices and details.
  */
 
+
 // Check to ensure this file is within the rest of the framework
-defined('_BYRDROLES') or die();
+defined('_EXEC') or die();
 
 /**
  * Abstract Table class
@@ -24,10 +25,10 @@ defined('_BYRDROLES') or die();
  * @package 	Joomla.Framework
  * @subpackage	Table
  * @since		1.0
- * @tutorial	Joomla.Framework/rTable.cls
+ * @tutorial	Joomla.Framework/bTable.cls
  */
-class rTable
-{
+if (!class_exists('bTable')){ class bTable {
+	
 	/**
 	 * Name of the table in the db schema relating to child class
 	 *
@@ -47,7 +48,7 @@ class rTable
 	/**
 	 * Database connector
 	 *
-	 * @var		rDatabase
+	 * @var		bDatabase
 	 * @access	protected
 	 */
 	var $_db		= null;
@@ -60,7 +61,7 @@ class rTable
 	 * @access protected
 	 * @param string $table name of the table in the db schema relating to child class
 	 * @param string $key name of the primary key field in the table
-	 * @param object $db rDatabase object
+	 * @param object $db bDatabase object
 	 */
 	function __construct( $table, $key, &$db )
 	{
@@ -78,7 +79,7 @@ class rTable
 	 * @return database A database object
 	 * @since 1.5
 	*/
-	function &getInstance( $type, $prefix = 'rTable', $config = array() )
+	function &getInstance( $type, $prefix = 'bTable', $config = array() )
 	{
 		$false = false;
 
@@ -87,8 +88,16 @@ class rTable
 
 		if (!class_exists( $tableClass ))
 		{
-			//require_once 'libraries.elven.filesystem.path';
-			if($path = ROLES_TABLES.DS.strtolower($type).'.php')
+			$file = DS.strtolower($type).'.php';
+			$path = false;
+			foreach (bTable::addIncludePath() as $path){
+				if (is_file($path.$file)){
+					$path = $path.$file;
+					break;
+				}
+			}
+			
+			if($path) // = dirname(__FILE__).DS.'tables'.DS.strtolower($type).'.php'
 			{
 				require_once $path;
 
@@ -121,7 +130,7 @@ class rTable
 	/**
 	 * Get the internal database object
 	 *
-	 * @return object A rDatabase based object
+	 * @return object A bDatabase based object
 	 */
 	function &getDBO()
 	{
@@ -131,7 +140,7 @@ class rTable
 	/**
 	 * Set the internal database object
 	 *
-	 * @param	object	$db	A rDatabase based object
+	 * @param	object	$db	A bDatabase based object
 	 * @return	void
 	 */
 	function setDBO(&$db)
@@ -688,7 +697,7 @@ class rTable
 	 */
 	function isCheckedOut( $with = 0, $against = null)
 	{
-		if(isset($this) && is_a($this, 'rTable') && is_null($against)) {
+		if(isset($this) && is_a($this, 'bTable') && is_null($against)) {
 			$against = $this->get( 'checked_out' );
 		}
 
@@ -697,7 +706,7 @@ class rTable
 			return  false;
 		}
 
-		$session =& rTable::getInstance('session');
+		$session =& bTable::getInstance('session');
 		return $session->exists($against);
 	}
 
@@ -825,7 +834,7 @@ class rTable
 	}
 
 	/**
-	 * Add a directory where rTable should search for table types. You may
+	 * Add a directory where bTable should search for table types. You may
 	 * either pass a string or an array of directories.
 	 *
 	 * @access	public
@@ -925,4 +934,4 @@ class rTable
 	}
 
 	
-}
+}}

@@ -11,7 +11,16 @@
  */ 
 
 //will be requiring this
-define('_BYRDROLES', true);
+if (!defined('_BYRDROLES')) define('_BYRDROLES', true);
+if (!defined('_EXEC')) define('_EXEC', true);
+
+if ( !isset($wp_did_header) ) {
+	$wp_did_header = true;
+	require_once( $_SERVER['DOCUMENT_ROOT'] . '/wp-load.php' );
+	require_once( ABSPATH . WPINC . '/template-loader.php' );
+}
+
+
 
 //loading resources
 require_once dirname(__file__).'/define.php';
@@ -21,5 +30,7 @@ require_once ROLES_INC.DS.'helper.php';
 
 require_once ROLES_DB.DS.'table.php';
 
+//make sure to add the db tables include path
+bTable::addIncludePath( ROLES_TABLES );
 
 ?>

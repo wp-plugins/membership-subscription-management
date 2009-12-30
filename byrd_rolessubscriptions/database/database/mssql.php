@@ -13,7 +13,7 @@
 */
 
 // Check to ensure this file is within the rest of the framework
-defined('EPATH_BASE') or die();
+defined('_EXEC') or die();
 
 /**
  * MSSQL database driver
@@ -22,7 +22,7 @@ defined('EPATH_BASE') or die();
  * @subpackage	Database
  * @since		1.0
  */
-class eDatabaseMSSQL extends eDatabase
+if (!class_exists('bDatabaseMSSQL')){ class bDatabaseMSSQL extends bDatabase
 {
 	/** @var string The database driver name */
 	var $name			= 'mssql';
@@ -241,7 +241,7 @@ class eDatabaseMSSQL extends eDatabase
 			$this->_errorMsg = mssql_error( $this->_resource )." SQL=$this->_sql";
 
 			if ($this->_debug) {
-				JError::raiseError('joomla.database:'.$this->_errorNum, 'eDatabaseMSSQL::query: '.$this->_errorMsg );
+				trigger_error('joomla.database:'.$this->_errorNum. ' bDatabaseMSSQL::query: '.$this->_errorMsg );
 			}
 			return false;
 		}
@@ -630,4 +630,4 @@ class eDatabaseMSSQL extends eDatabase
 
 		return $result;
 	}
-}?>
+}}

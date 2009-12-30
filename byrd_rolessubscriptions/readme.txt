@@ -2,8 +2,8 @@
 Contributors: Jonathon Byrd
 Donate link: http://www.jonathonbyrd.com/
 Tags: membership, members, subscription, paypal, subscriptions, users
-Requires at least: 2.8
-Tested up to: 2.9
+Requires at least: 2.0
+Tested up to: 3.0
 Stable tag: 1.0
 
 Plugin Manages user subscriptions by creating and deleting user accounts while managing their payments.
@@ -48,16 +48,20 @@ You shouldn't need to modify any of your paypal account settings in order for th
 	
 **Features Walkthrough**
 
-1. **Login Widget
-I've provided a snippet of Code that will allow you to display a small login form on your pages. This snippet of code will require that you open your template files and paste the code into your .php pages. Or if you have the widget manager installed, you can paste this code into the php field.
+1. **Subscription Widget
+There are two ways to paste your subscription information into your pages or posts. The first is the PHP method. I suggest that you only use this if you are comfortable with PHP coding.
 
-&lt;?php global $byrdRoles;$byrdRoles-&gt;getLogin(); ?&gt;
-		
-1. **Subscription Page**
-If designed this to be an insertable block so that you can paste your subscription information anywhere around your website. Just use the code below.
+&lt;?php byrd_subscription(); ?&gt;
 
-&lt;?php global $byrdRoles;$byrdRoles-&gt;getSubscriptions(); ?&gt;
+The second method is to paste this HTML comment directly into the html editor in the wordpress admin area. Simply edit your page or post, then change the editor to HTML and paste this code.
+
+&lt;!-- byrd subscription --&gt
 		
+1. **Login Widget**
+The same rules apply to the two following snippets. The first is for php developers, the second is for the wordpress editable pages.
+
+&lt;?php byrd_login(); ?&gt;
+&lt;!-- byrd login --&gt
 		
 1. **Confirmation Page**
 The confirmation page will wrap itself with your template and show as a receipt to your new Member. No adjustments are needed for this page.
@@ -120,11 +124,29 @@ Absolutely, this is my first plugin for wordpress and I've tried to provide you 
 == Screenshots ==
 
 1. I've screenshotted all of the pages and how they display on my website. I hope this helps.
+2. Page
+3. Page
+4. Page
+5. Page
+6. Page
+7. Page
+8. Page
 
 == Changelog ==
 
 = 1.0 =
 * Let there be Light!
 
-== Arbitrary section ==
+= 1.0.1 =
+User input has suggested the following changes
+
+* Changed the getSubscriptions code to byrd_subscription(); instead of the complicated code that was first posted. Although the first code is still valid.
+* Changed the original code for calling the login for to byrd_login(); the old code is still valid.
+* Added support to change the submit buttons text.
+* Added ini_set memory limit to ensure that enough memory is set aside for the support page to run properly.
+* Added subscription level support so that you may change the default role that a user subscribes to.
+
+
+
+
 

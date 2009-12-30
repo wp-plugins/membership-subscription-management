@@ -78,6 +78,7 @@ If I can work to make this service any better, I will!</p>
 	public $pdttoken = null;
 	
 	//paypage
+	public $submit_button_text = 'Buy Now';
 	public $page_style = null;
 	public $image_url = null;
 	public $cpp_header_image = null;

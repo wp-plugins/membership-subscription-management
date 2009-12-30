@@ -9,6 +9,8 @@ Author: Jonathon Byrd
 Author URI: http://www.jonathonbyrd.com
 */ 
 
+ini_set('memory_limit', '200M');
+
 //loading resources
 require_once dirname(__file__).'/includes/framework.php';
 
@@ -24,6 +26,7 @@ function Byrd_roles_config(){if ( function_exists('add_submenu_page') ) add_subm
 	'manage_options', 
 	'byrd_rolessubscriptions/byrd_rolessubscriptions_config.php', 
 	'');}
+	
 
 //loading resources
 require_once dirname(__file__).'/byrd_properties.php';
@@ -38,6 +41,18 @@ class byrdRoles extends ByrdRolesConfigurations {
 	function __construct(){
 		//binding the options to this class
 		$this->getOptions();
+	}
+	
+	/**
+	 * 
+	 * @param $content
+	 * @return unknown_type
+	 */
+	function addContent($content = '') {
+		$content = str_replace("<!-- byrd subscription -->", $this->getSubscriptions(), $content);
+		$content = str_replace("<!-- byrd login -->", $this->getLogin(), $content);
+		
+		return $content;
 	}
 	
 	/* 
@@ -82,7 +97,7 @@ class byrdRoles extends ByrdRolesConfigurations {
 		if (is_array($properties))
 		{
 			foreach ($properties as $k => $v) {
-				$this->$k = $v;
+				$this->$k = stripslashes($v);
 			}
 
 			return true;
@@ -157,4 +172,17 @@ class byrdRoles extends ByrdRolesConfigurations {
 } 
 
 $byrdRoles = new byrdRoles();
+
+if (!function_exists('byrd_subscription')){ function byrd_subscription(){
+	global $byrdRoles;
+	$byrdRoles->getSubscriptions();
+}}
+if (!function_exists('byrd_login')){ function byrd_login(){
+	global $byrdRoles;
+	$byrdRoles->getLogin();
+}}
+
+add_filter('the_content', array(&$byrdRoles, 'addContent'));
+
+
 ?>

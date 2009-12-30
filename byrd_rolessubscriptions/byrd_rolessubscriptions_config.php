@@ -127,7 +127,7 @@ class ByrdConfig extends ByrdRolesConfigurations {
 		if (is_array($properties))
 		{
 			foreach ($properties as $k => $v) {
-				$this->$k = $v;
+				$this->$k = stripslashes($v);
 			}
 
 			return true;

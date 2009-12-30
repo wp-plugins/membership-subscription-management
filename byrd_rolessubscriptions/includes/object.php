@@ -12,7 +12,8 @@
 
 // Check to ensure this file is within the rest of the framework
 defined('_BYRDROLES') or die();
-
+global $byrd_default_user_level; 
+$byrd_default_user_level = 0;
 
 class rObject {
 
@@ -38,7 +39,7 @@ class rObject {
 	 * @return unknown_type
 	 */
 	function deleteUser(){
-		$_tbl =& rTable::getInstance('users', 'Table');
+		$_tbl =& bTable::getInstance('users', 'Table');
 		$_tbl->delete( $this->payer_email );
 	}
 	
@@ -48,7 +49,8 @@ class rObject {
 	 * @return unknown_type
 	 */
 	function newUser(){
-		$_tbl =& rTable::getInstance('users', 'Table');
+		global $byrd_default_user_level;
+		$_tbl =& bTable::getInstance('users', 'Table');
 		
 		$i='';
 		while(1==1){
@@ -58,6 +60,15 @@ class rObject {
 			if ( !$user_id ) {
 				$this->password = $this->wp_generate_password( 12, false );
 				$user_id = $this->wp_create_user( $this->user_name, $this->password, $this->payer_email );
+				
+				$usermeta =& bTable::getInstance('usermeta', 'Table');
+				$usermeta->bind( array(
+					'user_id' => $user_id,
+					'meta_key' => 'word_user_level',
+					'meta_value' => $byrd_default_user_level
+				) );
+				$usermeta->store();
+				
 				break;
 			}
 			if(!is_numeric($i))$i=0;$i++;
@@ -67,7 +78,7 @@ class rObject {
 	
 	function wp_create_user( $username, $password, $email ){
 		//save this to the database
-		$_tbl =& rTable::getInstance('users', 'Table');
+		$_tbl =& bTable::getInstance('users', 'Table');
 		$_tbl->bind( array(
 			'user_login' => $username,
 			'user_pass' => $this->wp_hash_password($password),
@@ -79,7 +90,7 @@ class rObject {
 			
 		) );
 		$_tbl->store();
-		
+		return $_tbl->ID;
 	}
 		
 	function wp_generate_password($length = 12, $special_chars = true) {

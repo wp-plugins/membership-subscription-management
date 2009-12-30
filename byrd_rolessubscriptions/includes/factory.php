@@ -67,7 +67,7 @@ class rFactory
 
 		$options	= array ( 'driver' => $driver, 'host' => $host, 'user' => $user, 'password' => $password, 'database' => $database, 'prefix' => $prefix );
 
-		$db =& rDatabase::getInstance( $options );
+		$db =& bDatabase::getInstance( $options );
 
 		
 		//$db->debug( $debug );

@@ -17,7 +17,7 @@ defined('_BYRDROLES') or die();
 * Table class
 *
 */
-class TableIpn extends rTable {
+if (!class_exists('TableIpn')){ class TableIpn extends bTable {
 
 	/**
 	 * Key
@@ -402,5 +402,5 @@ class TableIpn extends rTable {
 	}
 	
 	
-}
+}}
 ?>

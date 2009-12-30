@@ -475,7 +475,7 @@ class ByrdIpn extends rObject {
 		//Validate the ipn post
 		if (!$this->postback()) return false;
 		if ($this->payment_status != 'Completed') return false;
-		if ($this->test_ipn) return false;
+		//if ($this->test_ipn) return false;
 		
 		
 		//do custom

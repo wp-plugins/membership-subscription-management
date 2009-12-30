@@ -21,15 +21,14 @@ textarea {width:95%;height:100px;}
 textarea.large {height:400px;}
 </style>
 
-<div class="byrdtabs">
-	<ul id="sidemenu">
-		<li><a id="subscriptionlink" class="current">Subscription</a></li>
-		<li><a id="configurationslink">Configurations</a></li>
-		<li><a id="notificationslink">Notifications</a></li>
-		<li><a id="installationlink" >Documentation</a></li>
-		<li><a id="jonathonbyrdlink" >Support Forum</a></li>
-		
-	</ul>
+<div class="byrdtabs"> 
+  <ul id="sidemenu">
+    <li><a id="subscriptionlink" class="current">Subscription</a></li>
+    <li><a id="configurationslink">Configurations</a></li>
+    <li><a id="notificationslink">Notifications</a></li>
+    <li><a id="installationlink" >Documentation</a></li>
+    <li><a id="jonathonbyrdlink" >Support Forum</a></li>
+  </ul>
 </div>
 	
 <div id="byrdsubscription">
@@ -66,6 +65,13 @@ textarea.large {height:400px;}
 			<td><input id="a3" name="a3" type="text" size="20" value="<?php echo $this->a3; ?>" /></td>
 			</tr><tr><td colspan="2" class="paypalinfo">
 			How much are you going to charge?
+			</td>
+		</tr>
+		<tr>
+			<td width="200"><label for="submit_button_text">Submit Button</label></td>
+			<td><input id="submit_button_text" name="submit_button_text" type="text" size="20" value="<?php echo $this->submit_button_text; ?>" /></td>
+			</tr><tr><td colspan="2" class="paypalinfo">
+			This number is not used by our system, set it to anything that you would like.
 			</td>
 		</tr>
 		<tr>
@@ -496,6 +502,14 @@ textarea.large {height:400px;}
 	traffic and conversion rates, visit my website, as all of the tools I'm providing are geared to helping you make a profit.</p>
 	
 	<h2>Installation</h2>
+	<ol>
+		<li>Upload the files directly from the zip archive into your wordpress plugins directory</li>
+		<li>Activate the Byrd Roles Subscription plugin from your wordpress administration area</li>
+		<li>Define your Subscription within the Membership Subscriptions Configurations area.</li>
+		<li>From your wordpress admin area, click Settings -> General and then uncheck the "Membership" checkbox</li>
+		<li>Paste the subscription code into your .php file</li>
+	</ol>
+	
 	<p><b>This plugin does one thing and one thing only, it is designed to create user accounts 
 	for new subscribers and delete user accounts of expired subscribers.</b> This plugin does not manage 
 	access rights to anypages or posts.</p>
@@ -519,7 +533,7 @@ textarea.large {height:400px;}
 		This snippet of code will require that you open your template files and paste the code into your .php pages.
 		Or if you have the widget manager installed, you can paste this code into the php field.</p>
 		<pre>
-		&lt;?php global $byrdRoles;$byrdRoles-&gt;getLogin(); ?&gt;
+		&lt;?php byrd_login(); ?&gt;
 		</pre>
 		</li>
 		
@@ -528,7 +542,7 @@ textarea.large {height:400px;}
 		<p>If designed this to be an insertable block so that you can paste your subscription information anywhere
 		around your website. Just use the code below.</p>
 		<pre>
-		&lt;?php global $byrdRoles;$byrdRoles-&gt;getSubscriptions(); ?&gt;
+		&lt;?php byrd_subscription(); ?&gt;
 		</pre>
 		</li>
 		

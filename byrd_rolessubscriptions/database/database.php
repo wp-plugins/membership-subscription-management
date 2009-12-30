@@ -12,8 +12,9 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
+
 // Check to ensure this file is within the rest of the framework
-defined('_BYRDROLES') or die();
+defined('_EXEC') or die();
 
 /**
  * Database connector class
@@ -23,8 +24,7 @@ defined('_BYRDROLES') or die();
  * @subpackage	Database
  * @since		1.0
  */
-class rDatabase
-{
+if (!class_exists('bDatabase')){ class bDatabase {
 	/**
 	 * The database driver name
 	 *
@@ -188,7 +188,7 @@ class rDatabase
 	 * database driver dependent.
 	 *
 	 * @param array Parameters to be passed to the database driver
-	 * @return rDatabase A database object
+	 * @return bDatabase A database object
 	 * @since 1.5
 	*/
 	function &getInstance( $options	= array() )
@@ -217,7 +217,7 @@ class rDatabase
 				return false;
 			}
 
-			$adapter	= 'rDatabase'.$driver;
+			$adapter	= 'bDatabase'.$driver;
 			$instance	= new $adapter($options);
 
 			if ( $error = $instance->getErrorMsg() )
@@ -261,7 +261,7 @@ class rDatabase
 		foreach($handlers as $handler)
 		{
 			$name = substr($handler, 0, strrpos($handler, '.'));
-			$class = 'rDatabase'.ucfirst($name);
+			$class = 'bDatabase'.ucfirst($name);
 
 			if(!class_exists($class)) {
 				require_once(dirname(__FILE__).DS.'database'.DS.$name.'.php');
@@ -1085,4 +1085,5 @@ class rDatabase
 	{
 		return '0';
 	}
-}
+	
+}}
