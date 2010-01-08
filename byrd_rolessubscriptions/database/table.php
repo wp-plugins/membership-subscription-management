@@ -113,14 +113,14 @@ if (!class_exists('bTable')){ class bTable {
 				return $false;
 			}
 		}
-
+		
 		//Make sure we are returning a DBO object
 		if (array_key_exists('dbo', $config))  {
 			$db =& $config['dbo'];
 		} else {
-			$db = & rFactory::getDBO();
+			$db = & ContactFactory::getDBO();
 		}
-
+		
 		$instance = new $tableClass($db);
 		//$instance->setDBO($db);
 

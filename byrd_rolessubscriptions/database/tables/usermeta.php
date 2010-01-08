@@ -1,16 +1,17 @@
 <?php
-/*
-Plugin Name: User Role Subscriptions
-Plugin URI: http://www.jonathonbyrd.com
-Description: This simple wordpress plugin is designed to manage user role subscriptions. You may charge differently for all roles and manage their subscription periods.
-Version: 1.0.0
-Date: December 20th, 2009
-Author: Jonathon Byrd
-Author URI: http://www.jonathonbyrd.com
-*/ 
+/**
+ * @subpackage	: Wordpress
+ * @author		: Jonathon Byrd
+ * @copyright	: All Rights Reserved, Byrd Inc. 2009
+ * @link		: http://www.jonathonbyrd.com
+ * 
+ * Jonathon Byrd is a freelance developer for hire. Jonathon has owned many companies and
+ * understands the importance of website credibility. Contact Jonathon Today.
+ * 
+ */ 
 
 // Check to ensure this file is within the rest of the framework
-defined('_BYRDROLES') or die();
+defined('_EXEC') or die();
 
 
 /**
@@ -76,34 +77,41 @@ if (!class_exists('TableUsermeta')){ class TableUsermeta extends bTable {
 	}
 	
 	/**
-	 * making sure all variables ar mysql safe
+	 * get all meta
 	 */
-	function delete( $email ){
+	function getMeta( ){
 		//set the query
-		$query 	= "SELECT ID FROM ".$this->_tbl
-				. " WHERE user_email = '".$email."'"
-				. " LIMIT 1;";
+		$query 	= "SELECT * FROM ".$this->_tbl
+				. " WHERE user_id = '".$this->user_id."'";
 		
 		//set and run the query
 		$this->_db->setQuery($query);
 		
-		$id = $this->_db->loadObject()->ID;
-		
-		parent::delete( $id );
+		return $this->_db->loadAssocList(); 
 	}
 	
 	/**
-	 * making sure all variables ar mysql safe
+	 * gets this meta
 	 */
-	function username_exists($name){
+	function find( $where ){
+		if (!is_array($where)) return false;
+		
 		//set the query
 		$query 	= "SELECT * FROM ".$this->_tbl
-				. " WHERE user_login = '".$name."'";
+				. " WHERE ";
+		
+		$querystring = array();
+		foreach ($where as $key => $value)	
+		$querystring[] = " ".$key." = '".$value."'";
+		
+		$query .= implode(" AND ", $querystring);
 		
 		//set and run the query
 		$this->_db->setQuery($query);
+		if ($meta = $this->_db->loadAssoc())
+			$this->load( $meta['umeta_id'] );
 		
-		return $this->_db->loadAssoc(); 
+		return true; 
 	}
 	
 	/**

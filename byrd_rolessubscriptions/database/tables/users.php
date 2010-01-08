@@ -1,16 +1,18 @@
 <?php
-/*
-Plugin Name: User Role Subscriptions
-Plugin URI: http://www.jonathonbyrd.com
-Description: This simple wordpress plugin is designed to manage user role subscriptions. You may charge differently for all roles and manage their subscription periods.
-Version: 1.0.0
-Date: December 20th, 2009
-Author: Jonathon Byrd
-Author URI: http://www.jonathonbyrd.com
-*/ 
+/**
+ * @subpackage	: Wordpress
+ * @author		: Jonathon Byrd
+ * @copyright	: All Rights Reserved, Byrd Inc. 2009
+ * @link		: http://www.jonathonbyrd.com
+ * 
+ * Jonathon Byrd is a freelance developer for hire. Jonathon has owned many companies and
+ * understands the importance of website credibility. Contact Jonathon Today.
+ * 
+ */ 
+
 
 // Check to ensure this file is within the rest of the framework
-defined('_BYRDROLES') or die();
+defined('_EXEC') or die();
 
 
 /**
@@ -151,6 +153,20 @@ if (!class_exists('TableUsers')){ class TableUsers extends bTable {
 	}
 	
 	/**
+	 * 
+	 */
+	function useremail_exists($email){
+		//set the query
+		$query 	= "SELECT * FROM ".$this->_tbl
+				. " WHERE user_email = '".$email."'";
+		
+		//set and run the query
+		$this->_db->setQuery($query);
+		
+		return $this->_db->loadAssoc(); 
+	}
+	
+	/**
 	 * returns a list of all the items
 	 * 
 	 * @access public
@@ -173,12 +189,12 @@ if (!class_exists('TableUsers')){ class TableUsers extends bTable {
 	 * @return boolean True on success
 	 */
 	function getPageList() {
-		if ( $page = eRequest::getVar("page", 0) )
+		if ( $page = bRequest::getVar("page", 0) )
 		{
 			$page = true;
 			
-			$page = intval(eRequest::getVar("page"));
-			$perpage = intval(eRequest::getVar("perpage"));
+			$page = intval(bRequest::getVar("page"));
+			$perpage = intval(bRequest::getVar("perpage"));
 			$n = ( $page -1 ) * $perpage;
 		}
 		
@@ -187,8 +203,8 @@ if (!class_exists('TableUsers')){ class TableUsers extends bTable {
 		if ( $page )$limit = " LIMIT $n, $perpage";
 		
 		// this variables Omnigrid will send only if serverSort option is true
-		$sorton = eRequest::getVar("sorton", false);
-		$sortby = eRequest::getVar("sortby");
+		$sorton = bRequest::getVar("sorton", false);
+		$sortby = bRequest::getVar("sortby");
 		
 		//setting pagination query
 		$where = "";
@@ -222,4 +238,3 @@ if (!class_exists('TableUsers')){ class TableUsers extends bTable {
 	
 	
 }}
-?>

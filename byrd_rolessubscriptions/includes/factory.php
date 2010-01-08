@@ -10,15 +10,16 @@
  * 
  */ 
 
+
 // Check to ensure this file is within the rest of the framework
-defined('_BYRDROLES') or die();
+defined('_EXEC') or die();
 
 /**
  * Every Booking Framework Factory class
  *
  * @static
  */
-class rFactory
+class RolesFactory
 {
 	/**
 	 * Get a database object
@@ -34,10 +35,7 @@ class rFactory
 
 		if (!is_object($instance))
 		{
-			//get the debug configuration setting
-			//$config =& eFactory::getConfig();
-			
-			$instance = rFactory::_createDBO();
+			$instance = RolesFactory::_createDBO();
 		}
 
 		return $instance;
@@ -53,9 +51,6 @@ class rFactory
 	public static function &_createDBO()
 	{
 		
-		require_once ROLES_DB.DS.'database.php';
-		//require_once $_SERVER['DOCUMENT_ROOT'].DS.'wp-config.php';
-
 		global $wpdb;
 		
 		$host 			= DB_HOST;
@@ -64,13 +59,18 @@ class rFactory
 		$database		= DB_NAME;
 		$prefix 		= $wpdb->prefix;
 		$driver 		= 'mysql';
-
-		$options	= array ( 'driver' => $driver, 'host' => $host, 'user' => $user, 'password' => $password, 'database' => $database, 'prefix' => $prefix );
+		
+		$options	= array ( 
+			'driver' => $driver, 
+			'host' => $host, 
+			'user' => $user, 
+			'password' => $password, 
+			'database' => $database, 
+			'prefix' => $prefix 
+		);
 
 		$db =& bDatabase::getInstance( $options );
-
 		
-		//$db->debug( $debug );
 		return $db;
 	}
 

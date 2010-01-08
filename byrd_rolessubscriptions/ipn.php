@@ -14,14 +14,14 @@
 require_once dirname(__file__).'/includes/framework.php';
 
 // Check to ensure this file is within the rest of the framework
-defined('_BYRDROLES') or die();
+defined('_EXEC') or die();
 
 /**
  * 
  * @author Jonathon Byrd
  *
  */
-class ByrdIpn extends rObject {
+class ByrdIpn extends bObject {
 	
 	/**
 	 * Subscription started
@@ -31,17 +31,21 @@ class ByrdIpn extends rObject {
 	function subscr_signup(){
 		
 		//creating new users
-		$this->newUser();
+		if (byrd_new_user( $this->first_name.' '.$this->last_name, $this->payer_email, $this->item_number ))
+		{
+			//sends confirmation email
+			byrd_send_mail( 
+				$this->receiver_email, 
+				$this->payer_email, 
+				'Subscription Account Created', 
+				ROLES.DS.'mail_signup.php', false ,true 
+			); 
+			return true;
+		}
+		file_put_contents('ipn_post.txt', json_encode($_POST) );
+		file_put_contents('ipn_classproperties.txt', json_encode($this->getProperties()).'', FILE_APPEND );
 		
-		//sends confirmation email
-		$this->SendEmail( 
-			$this->receiver_email, 
-			$this->payer_email, 
-			'Subscription Account Created', 
-			ROLES.DS.'mail_signup.php', false ,true 
-		); 
-		
-		return true;
+		return false;
 	}
 
 	/**
@@ -51,14 +55,27 @@ class ByrdIpn extends rObject {
 	 */
 	function subscr_payment(){
 		
-		//sends confirmation email
-		$this->SendEmail( 
-			$this->receiver_email, 
-			$this->payer_email, 
-			'Subscription Account Renewed', 
-			ROLES.DS.'mail_renewed.php', false ,true 
-		); 
+		//creating new users if they dont exist
+		if (!byrd_userexists( $this->payer_email )){
+			byrd_new_user( $this->first_name.' '.$this->last_name, $this->payer_email, $this->item_number );
 		
+			//sends confirmation email
+			byrd_send_mail( 
+				$this->receiver_email, 
+				$this->payer_email, 
+				'Subscription Account Created', 
+				ROL.DS.'mail_signup.php', false ,true 
+			); 
+			
+		} else {
+			//sends confirmation email
+			byrd_send_mail( 
+				$this->receiver_email, 
+				$this->payer_email, 
+				'Subscription Account Renewed', 
+				ROL.DS.'mail_renewed.php', false ,true 
+			); 
+		}
 		return true;
 	}
 
@@ -69,11 +86,10 @@ class ByrdIpn extends rObject {
 	 */
 	function subscr_eot(){
 		
-		//creating new users
-		$this->deleteUser();
+		$this->manageExpiration();
 		
 		//sends confirmation email
-		$this->SendEmail( 
+		byrd_send_mail( 
 			$this->receiver_email, 
 			$this->payer_email, 
 			'Subscription Account Expired', 
@@ -90,11 +106,10 @@ class ByrdIpn extends rObject {
 	 */
 	function subscr_cancel(){
 		
-		//creating new users
-		$this->deleteUser();
+		$this->manageExpiration();
 		
 		//sends confirmation email
-		$this->SendEmail( 
+		byrd_send_mail( 
 			$this->receiver_email, 
 			$this->payer_email, 
 			'Subscription Account Canceled', 
@@ -102,6 +117,19 @@ class ByrdIpn extends rObject {
 		); 
 		
 		return true;
+	}
+	
+	/**
+	 * here we figure out what to do with expired accounts
+	 * @return bool
+	 */
+	function manageExpiration(){
+		switch($this->custom){
+			//managing expired users
+			default:case 0: byrd_delete_user( $this->payer_email ); break;
+			case 1: byrd_change_usersrole( byrd_userexists( $this->payer_email ), 'subscriber'); break;
+		}
+		
 	}
 
 	/**
@@ -475,7 +503,7 @@ class ByrdIpn extends rObject {
 		//Validate the ipn post
 		if (!$this->postback()) return false;
 		if ($this->payment_status != 'Completed') return false;
-		//if ($this->test_ipn) return false;
+		if ($this->test_ipn) return false;
 		
 		
 		//do custom
@@ -503,7 +531,7 @@ class ByrdIpn extends rObject {
 	 * @return 
 	 */
 	function storeIpn(){
-		$_tbl =& rTable::getInstance('ipn', 'Table');
+		$_tbl =& bTable::getInstance('ipn', 'Table');
 		$_tbl->bind( $this->getProperties() );
 		$_tbl->store();
 	}
