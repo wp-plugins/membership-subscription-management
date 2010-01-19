@@ -53,8 +53,10 @@ if (!function_exists('byrd_pluginfolder')){
  * @return string
  */
 if (!function_exists('byrd_rootfolder')){ 
-	function byrd_rootfolder( $file = __file__ ){
-		return str_replace(DS.'wp-content'.DS.'plugins'.DS.byrd_pluginfolder( $file ).DS.'includes','',dirname( $file ));
+	function byrd_rootfolder( $file = '' ){
+		$path = dirname(__file__);
+		$parts = explode(DS, $path);
+		return str_replace(DS.'wp-content'.DS.'plugins'.DS.byrd_pluginfolder( $file ).DS.'includes','',dirname(__FILE__));
 	}
 }
 	
@@ -503,7 +505,7 @@ if (!function_exists('byrd_change_usersrole')){
 		$usermeta->bind( array(
 			'user_id' => $ID,
 			'meta_key' => 'word_capabilities',
-			'meta_value' => serialize(array($role => 1))
+			'meta_value' => serialize(array($role => true))
 		) );
 		$usermeta->store();
 		
@@ -528,13 +530,14 @@ if (!function_exists('byrd_new_user')){
 			
 			$user_id = $_tbl->username_exists( $username );
 			if ( !$user_id ) {
-				$user_id = byrd_create_user( $username, $email );
+				$created = byrd_create_user( $username, $email );
+				$user_id = $created['user_id'];
 				
 				$usermeta =& bTable::getInstance('usermeta', 'Table');
 				$usermeta->bind( array(
 					'user_id' => $user_id,
 					'meta_key' => 'word_capabilities',
-					'meta_value' => serialize(array($role => 1))
+					'meta_value' => serialize(array($role => true))
 				) );
 				$usermeta->store();
 				
@@ -542,6 +545,8 @@ if (!function_exists('byrd_new_user')){
 			}
 			if(!is_numeric($i))$i=0;$i++;
 		}
+		
+		return array('user_name' => $username, 'password' => $created['password'] );
 		
 	}
 	
@@ -573,7 +578,7 @@ if (!function_exists('byrd_create_user')){
 			
 		) );
 		$_tbl->store();
-		return $_tbl->ID;
+		return array('user_id' => $_tbl->ID, 'password' => $password);
 	}
 
 }
@@ -629,7 +634,9 @@ if (!function_exists('byrd_hash_password')){
  * @return unknown_type
  */
 if (!function_exists('byrd_send_mail')){ 
-	function byrd_send_mail( $Sender =false, $Recipiant =false, $Subject =false, $Message =false, $Attach =false ,$SendCopy =true ){
+	function byrd_send_mail( $Sender =false, $Recipiant =false, $Subject =false, $Message =false, $Attach =false ,$SendCopy =true, $Arr = false ){
+		if (!$Arr) $Arr = $_POST;
+		
 		/*
 		 * Setting the sender and receipiant to defaults
 		 * 
@@ -662,7 +669,7 @@ if (!function_exists('byrd_send_mail')){
 			/*
 			 * replace the variables in the message
 			 */			
-  			foreach($this->getProperties() as $k => $v){
+  			foreach($Arr as $k => $v){
   				$Message 		= str_replace('_'.$k.'_', $v, $Message);
   			}
   			$htmlVersion 	= $Message;

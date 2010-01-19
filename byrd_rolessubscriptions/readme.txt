@@ -4,7 +4,7 @@ Donate link: http://www.jonathonbyrd.com/
 Tags: membership, members, subscription, paypal, subscriptions, users, roles
 Requires at least: 2.0
 Tested up to: 3.0
-Stable tag: 1.1.0
+Stable tag: 1.5.0
 
 Plugin Manages user subscriptions by creating and deleting user accounts while managing their payments.
 
@@ -168,4 +168,9 @@ There's been a lot of user input and a lot of suggestions, I've changed the foll
 1. The return page URL has been fixed so that users will properly return to your website.
 1. Link in Wp Menu has been changed to Role Subscriptions and now resides under the USERS tab.
 
+= 1.5.0 =
 
+1. Updated the paypal IPN
+1. Fixed the subscription recurring payment issues
+1. Fixed the byrd_login and byrd_subscription display
+1. pretty much overhauled the core for stability
