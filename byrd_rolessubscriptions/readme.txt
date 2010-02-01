@@ -4,7 +4,7 @@ Donate link: http://www.jonathonbyrd.com/
 Tags: membership, members, subscription, paypal, subscriptions, users, roles
 Requires at least: 2.0
 Tested up to: 3.0
-Stable tag: 1.5.0
+Stable tag: 1.5.1
 
 Plugin Manages user subscriptions by creating and deleting user accounts while managing their payments.
 

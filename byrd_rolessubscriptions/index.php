@@ -3,7 +3,7 @@
  * Plugin Name: User Role Subscriptions
  * Plugin URI: http://www.jonathonbyrd.com
  * Description: This simple wordpress plugin is designed to manage user role subscriptions. You may charge differently for all roles and manage their subscription periods.
- * Version: 1.5.0
+ * Version: 1.5.1
  * Date: December 20th, 2009
  * Author: Jonathon Byrd
  * Author URI: http://www.jonathonbyrd.com
