@@ -57,17 +57,17 @@ I will be continuing to develop a lot of features into this plugin over the next
 1. **Subscription Widget
 There are two ways to paste your subscription information into your pages or posts. The first is the PHP method. I suggest that you only use this if you are comfortable with PHP coding.
 
-&lt;?php byrd_subscription(); ?&gt;
+<?php byrd_subscription(); ?>
 
 The second method is to paste this HTML comment directly into the html editor in the wordpress admin area. Simply edit your page or post, then change the editor to HTML and paste this code.
 
-&lt;!-- byrd_subscription() --&gt;
+<!-- byrd_subscription() -->
 		
 1. **Login Widget**
 The same rules apply to the two following snippets. The first is for php developers, the second is for the wordpress editable pages.
 
-&lt;?php byrd_login(); ?&gt;
-&lt;!-- byrd_login() --&gt;
+<?php byrd_login(); ?>
+<!-- byrd_login() -->
 		
 1. **Confirmation Page**
 The confirmation page will wrap itself with your template and show as a receipt to your new Member. No adjustments are needed for this page.
