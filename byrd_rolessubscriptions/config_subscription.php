@@ -23,7 +23,7 @@ defined('_EXEC') or die();
 	This is that attempt. I'm confident that this has bugs and that you'll be needing to contact me to get them fixed.
 	That's also why I'm posting this Membership Subscription Plugin with only the ability to manage a single 
 	subscription type.</p>
-	<p>If you need more from a Membership Subscription Manager, you should consider paying the $10 dollars for the Pro version
+	<p>If you need more from a Membership Subscription Manager, you should consider paying the $20 dollars for the Pro version
 	of this software, located at <a href="http://www.jonathonbyrd.com">jonathonbyrd.com</a></p>
 	<table>
 		<tr>
@@ -42,7 +42,7 @@ defined('_EXEC') or die();
 		</tr>
 		<tr>
 			<td><label for="item_description">Description</label></td>
-			<td><textarea id="item_description" name="item_description"><?php echo $this->item_description; ?></textarea></td>
+			<td><textarea id="item_description" name="item_description"><?php echo stripslashes($this->item_description); ?></textarea></td>
 			</tr><tr><td colspan="2" class="paypalinfo">
 			</td>
 		</tr>
@@ -169,10 +169,16 @@ defined('_EXEC') or die();
 			<BR/>M - for months; allowable range for p2 is 1 to 24
 			<BR/>Y - for years; allowable range for p2 is 1 to 5</td>
 		</tr>
-		<!-- 
+		
 		<tr>
 			<td><label for="src">Recurring payments</label></td>
-			<td><input <?php $this->clicked( $this->src ); ?> id="src" name="src" type="checkbox" /></td>
+			<td>
+			<select id="src" name="src">
+				<option <?php if ($this->src == '1')echo 'selected'; ?> value="1">Subscription payments recur</option>
+				<option <?php if ($this->src == '0')echo 'selected'; ?> value="0">Subscription payments do not recur</option>
+				
+			</select>
+			</td>
 			</tr><tr><td colspan="2" class="paypalinfo">
 			Recurring payments. Subscription payments recur unless subscribers cancel their subscriptions before the end of the current billing cycle or you limit the number of times that payments recur with the value that you specify for srt.
 			<BR/>Allowable values:
@@ -185,10 +191,10 @@ defined('_EXEC') or die();
 			<td><label for="srt">Recurring times</label></td>
 			<td><input id="srt" name="srt" type="text" size="20" value="<?php echo $this->srt; ?>" /></td>
 			</tr><tr><td colspan="2" class="paypalinfo">
-			Recurring times. Number of times that subscription payments recur. Specify an integer above 1. Valid only if you specify src="1".
+			Recurring times. Number of times that subscription payments recur. Specify an integer above 1. Valid only if you specify at least 1.
 			</td>
 		</tr>
-		 -->
+		 
 		<tr>
 			<td><label for="sra">Reattempt on failure</label></td>
 			<td><input id="sra" name="sra" type="checkbox" <?php $this->clicked( $this->sra ); ?> /></td>

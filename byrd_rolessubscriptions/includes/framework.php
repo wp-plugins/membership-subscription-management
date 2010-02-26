@@ -21,8 +21,8 @@ ini_set('memory_limit', '200M');
 
 if ( !isset($wp_did_header) ) {
 	$wp_did_header = true;
-	if (is_file(byrd_rootfolder(__file__).DS.'wp-load.php')){
-		require_once( byrd_rootfolder(__file__).DS.'wp-load.php' );
+	if (is_file($file = byrd_rootfolder(__file__).DS.'wp-load.php')){
+		require_once( $file );
 		require_once( ABSPATH . WPINC . DS.'template-loader.php' );
 		
 	} else {

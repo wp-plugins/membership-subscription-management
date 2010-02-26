@@ -118,7 +118,7 @@ if (!class_exists('bTable')){ class bTable {
 		if (array_key_exists('dbo', $config))  {
 			$db =& $config['dbo'];
 		} else {
-			$db = & ContactFactory::getDBO();
+			$db = & RolesFactory::getDBO();
 		}
 		
 		$instance = new $tableClass($db);

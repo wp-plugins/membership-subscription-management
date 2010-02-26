@@ -68,28 +68,27 @@ class byrdSiteRoles extends byrdPropertiesRoles {
 	 * @return unknown_type
 	 */
 	function contentFilters( $content = '' ) {
-		if (strpos($content, '<!-- byrd_subscription() -->') !== false){
+		if (strpos($content, '<!-- byrd_subscription() -->') !== false)
 			$content = str_replace("<!-- byrd_subscription() -->", $this->byrd_subscription(), $content);
-		}
-		if (strpos($content, '<!-- byrd_login() -->') !== false){
-			$content = str_replace("<!-- byrd_login() -->", $this->byrd_login(), $content);
-		}
+		if (strpos($content, '<!-- byrd_subscription -->') !== false)
+			$content = str_replace("<!-- byrd_subscription -->", $this->byrd_subscription(), $content);
+		
+		if (strpos($content, '<!-- byrd_login() -->') !== false)
+			$content = str_replace("<!-- byrd_login() -->", $this->getLogin(), $content);
+		if (strpos($content, '<!-- byrd login() -->') !== false)
+			$content = str_replace("<!-- byrd login() -->", $this->getLogin(), $content);
+		if (strpos($content, '<!-- byrd login -->') !== false)
+			$content = str_replace("<!-- byrd login -->", $this->getLogin(), $content);
+		if (strpos($content, '<!-- getLogin() -->') !== false)
+			$content = str_replace("<!-- getLogin() -->", $this->getLogin(), $content);
+		if (strpos($content, '<!-- byrdlogin() -->') !== false)
+			$content = str_replace("<!-- byrdlogin() -->", $this->getLogin(), $content);
+		
 		
 		return $content;
 	}
 	
-	/* 
-	 * catch all function
-	 */
-	function __call($method,$arguments) {
-		switch (substr($method,0,3)){
-			case 'get': $this->loadTheme($method,$arguments); break;
-			case 'scr': $this->javaScript($method,$arguments); break;
-			case 'css': $this->cssLink($method,$arguments); break;
-			
-		}
-		
-	}
+	
 	
 	
 } 

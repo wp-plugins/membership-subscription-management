@@ -92,7 +92,7 @@ If I can work to make this service any better, I will!</p>
 	public $lc = null;
 	public $cn = null;
 	public $no_shipping = null;
-	public $_return = null;			//PDT confirmation page
+	public $return = null;			//PDT confirmation page
 	public $rm = 2;
 	public $cbt = 'View Subscription Confirmation';	//return to merchant text
 	public $cancel_return = null;	//No Dont Go!!
@@ -193,7 +193,7 @@ If I can work to make this service any better, I will!</p>
 		$buffer = preg_replace('/([ \r\n\t]\/\/.*?[\r\n])/', '
 ', ' '.$buffer);
 		//removes extra spaces and extra line breaks
-		$buffer = str_replace(array("\r", "\t", '  ', '    ', '    '), ' ', $buffer);
+		//$buffer = str_replace(array("\r", "\t", '  ', '    ', '    '), ' ', $buffer);
 		
 		$buffer = str_replace('__HTTP__', $this->http(), $buffer);
 		
@@ -245,7 +245,7 @@ If I can work to make this service any better, I will!</p>
 		
 		//loading the wordpress themes
 		if (!defined('WP_USE_THEMES')) define('WP_USE_THEMES', false); 
-		$wpblogheader = $_SERVER['DOCUMENT_ROOT'].DS.'wp-blog-header.php';
+		$wpblogheader = byrd_rootfolder(__file__).DS.'wp-blog-header.php';
 		if (is_file($wpblogheader)) require_once $wpblogheader;
 		
 		//loading the requested file

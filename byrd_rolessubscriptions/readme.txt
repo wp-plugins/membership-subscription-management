@@ -4,7 +4,7 @@ Donate link: http://www.jonathonbyrd.com/
 Tags: membership, members, subscription, paypal, subscriptions, users, roles
 Requires at least: 2.0
 Tested up to: 3.0
-Stable tag: 1.0
+Stable tag: 1.5.0
 
 Plugin Manages user subscriptions by creating and deleting user accounts while managing their payments.
 
@@ -40,8 +40,8 @@ You shouldn't need to modify any of your paypal account settings in order for th
 1. Upload `byrd_rolessubscriptions` folder to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Set the configurations for your Subscription in the wp admin
-1. Insert `&lt;!-- byrd_subscription() --&gt;` into any Page.
-1. Insert `&lt;!-- byrd_login() --&gt;` into any Page.
+1. Insert `<!-- byrd_subscription() -->` into any Page.
+1. Insert `<!-- byrd_login() -->` into any Page.
 
 **TIP:** This plugin cannot be installed via the wordpress automatic installer because wordpress is placing the plugin inside of another folder which is causing the plugin to not display. If you don't have the ability to ftp into your site and get this installed properly, just send me an email and I'll install it for you.
 **TIP:** If you have problems getting the email notifications to save, check that the file permissions are set to 755.</p>
@@ -57,17 +57,22 @@ I will be continuing to develop a lot of features into this plugin over the next
 1. **Subscription Widget
 There are two ways to paste your subscription information into your pages or posts. The first is the PHP method. I suggest that you only use this if you are comfortable with PHP coding.
 
-&lt;?php byrd_subscription(); ?&gt;
+<?php byrd_subscription(); ?>
+or
+<?php global $byrdRoles; $byrdRoles->byrd_subscription();?>
 
 The second method is to paste this HTML comment directly into the html editor in the wordpress admin area. Simply edit your page or post, then change the editor to HTML and paste this code.
 
-&lt;!-- byrd_subscription() --&gt;
+<!-- byrd_subscription() -->
 		
 1. **Login Widget**
 The same rules apply to the two following snippets. The first is for php developers, the second is for the wordpress editable pages.
 
-&lt;?php byrd_login(); ?&gt;
-&lt;!-- byrd_login() --&gt;
+<?php byrd_login(); ?>
+or
+<?php global $byrdRoles; $byrdRoles->getLogin();?>
+<!-- byrd_login() -->
+
 		
 1. **Confirmation Page**
 The confirmation page will wrap itself with your template and show as a receipt to your new Member. No adjustments are needed for this page.
@@ -168,4 +173,9 @@ There's been a lot of user input and a lot of suggestions, I've changed the foll
 1. The return page URL has been fixed so that users will properly return to your website.
 1. Link in Wp Menu has been changed to Role Subscriptions and now resides under the USERS tab.
 
+= 1.5.0 =
 
+1. Updated the paypal IPN
+1. Fixed the subscription recurring payment issues
+1. Fixed the byrd_login and byrd_subscription display
+1. pretty much overhauled the core for stability

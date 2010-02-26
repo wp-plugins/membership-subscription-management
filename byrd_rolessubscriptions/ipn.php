@@ -64,7 +64,7 @@ class ByrdIpn extends bObject {
 				$this->receiver_email, 
 				$this->payer_email, 
 				'Subscription Account Created', 
-				ROL.DS.'mail_signup.php', false ,true 
+				ROLES.DS.'mail_signup.php', false ,true 
 			); 
 			
 		} else {
@@ -73,7 +73,7 @@ class ByrdIpn extends bObject {
 				$this->receiver_email, 
 				$this->payer_email, 
 				'Subscription Account Renewed', 
-				ROL.DS.'mail_renewed.php', false ,true 
+				ROLES.DS.'mail_renewed.php', false ,true 
 			); 
 		}
 		return true;
